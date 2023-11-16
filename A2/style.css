@@ -1,0 +1,59 @@
+body {
+    display: flex;
+    min-height: 100vh; /* Full viewport height */
+    flex-direction: column; /* Stack the children vertically */
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    box-shadow: 0px 2px 3px rgba(0, 0, 0, .4);
+    z-index: 100;
+}
+
+#app {
+     z-index: 50;
+	 flex: 1; /* To allow the container to grow and consume the available space */
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1; /* To allow main to grow and consume the available space */
+   
+}
+
+.sketch-holder {
+    background-color: grey;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300, 1fr));
+    gap: 16px;
+    padding: 16px;
+    grid-auto-rows: 1fr; /* Ensures rows adjust based on content size */
+}
+
+.sketch {
+	min-width: 50px;  /* minimum width for the sketches */
+    min-height: 50px; /* minimum height for the sketches */
+    width: max-content;
+
+    border-radius: 10px;
+    background-color: white;
+    text-align: center;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, .5);
+
+}
+
+.sketch .title {
+	max-width: 300px;
+}
+
+.sketch .description {
+	max-width: 300px;
+}
+
+.sketch canvas {
+	margin: 10px;
+    border: 3px solid black;
+	box-shadow: 0px 2px 8px rgba(0, 0, 0, .5);
+}
