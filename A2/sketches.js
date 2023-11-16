@@ -157,9 +157,9 @@ const sketches = [
   {
     name: "Rainbow Wave",
     show: true,
-    
+
     yoff: 0.0,
-    
+
     setup(p) {
       p.background(0, 100, 100);
       p.stroke(0, 100, 0);
@@ -167,15 +167,14 @@ const sketches = [
 
     draw(p) {
       // p.background(0, 100, 100, 0.1);
-      
+
       let xoff = 0;
       let colWidth = 4;
-      
-      for (let x = 0; x <= WIDTH; x += colWidth) {
 
+      for (let x = 0; x <= WIDTH; x += colWidth) {
         let y = p.map(p.noise(xoff, this.yoff), 0, 1, 0, HEIGHT / 2);
         p.fill(y, 100, 50);
-        p.rect(x, y, colWidth, HEIGHT - 2*y);
+        p.rect(x, y, colWidth, HEIGHT - 2 * y);
 
         xoff += 0.02;
       }
@@ -186,9 +185,9 @@ const sketches = [
   {
     name: "Noisy Numbers",
     show: true,
-    
+
     yoff: 0.0,
-    
+
     setup(p) {
       p.textSize(12);
       p.textAlign(p.CENTER, p.CENTER);
@@ -197,25 +196,23 @@ const sketches = [
     draw(p) {
       p.background(0);
 
-
       let xoff = 0;
       let colWidth = 10;
 
       for (let x = 0; x <= WIDTH; x += colWidth) {
         for (let y = 0; y <= HEIGHT; y += colWidth) {
-          let yhat = this.yoff + (y / HEIGHT) / 10;
-          let raw = p.noise(xoff, yhat)
+          let yhat = this.yoff + y / HEIGHT / 10;
+          let raw = p.noise(xoff, yhat);
           let c = p.map(raw, 0, 1, 0, 100);
           p.fill(c, 100, 50);
           // rect(x, y, colWidth, colWidth);
-          p.text(p.char(p.unchar('1') + p.map(raw, 0.1, 0.9, 0, 10)), x, y);
+          p.text(p.char(p.unchar("1") + p.map(raw, 0.1, 0.9, 0, 10)), x, y);
         }
 
         xoff += 0.01;
       }
 
       this.yoff += 0.005;
-      
     },
   },
   {
@@ -223,9 +220,9 @@ const sketches = [
     description: "",
     show: true,
     loopLength: 180,
-    
-    states: ['🤨', '😶‍🌫️', '😤', '😴', '🫠', '🤓'],
-    
+
+    states: ["🤨", "😶‍🌫️", "😤", "😴", "🫠", "🤓"],
+
     setup(p) {
       p.textAlign(p.CENTER, p.CENTER);
       p.fill(0, 100, 100);
@@ -233,29 +230,30 @@ const sketches = [
 
     draw(p) {
       p.background(0);
-      
+
       let t = p.frameCount % this.loopLength;
       let sIndex = Math.floor(t / (this.loopLength / this.states.length));
-      
+
       p.textSize(60);
       p.text(this.states[sIndex], WIDTH / 2, HEIGHT / 2);
-      
+
       // drawing spiral
       p.textSize(20);
-      for (let a = 0; a < (360 * 2); a += 10) {
-        let angle = a - (t * 12);
-        angle *= (Math.PI / 180); // convert to radians
-        let dist = 50 + (a / 5);
-        
+      for (let a = 0; a < 360 * 2; a += 10) {
+        let angle = a - t * 12;
+        angle *= Math.PI / 180; // convert to radians
+        let dist = 50 + a / 5;
+
         // p.ellipse(Math.cos(angle) * dist + WIDTH / 2, Math.sin(angle) * dist + HEIGHT / 2, 10, 10);
-        let c = p.unchar('a') + Math.floor(p.random(1, 26));
-        p.text(p.char(c), Math.cos(angle) * dist + WIDTH / 2, Math.sin(angle) * dist + HEIGHT / 2);
+        let c = p.unchar("a") + Math.floor(p.random(1, 26));
+        p.text(
+          p.char(c),
+          Math.cos(angle) * dist + WIDTH / 2,
+          Math.sin(angle) * dist + HEIGHT / 2
+        );
       }
-      
     },
   },
-  
-
 
   // template
   {
