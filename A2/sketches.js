@@ -25,6 +25,78 @@ function ease(t) {
 // =================================================
 const sketches = [
   {
+    name: "Rainbow Wave",
+    show: true,
+
+    yoff: 0.0,
+
+    setup(p) {
+      p.background(0, 100, 100);
+      p.stroke(0, 100, 0);
+    },
+
+    draw(p) {
+      // p.background(0, 100, 100, 0.1);
+
+      let xoff = 0;
+      let colWidth = 4;
+
+      for (let x = 0; x <= WIDTH; x += colWidth) {
+        let y = p.map(p.noise(xoff, this.yoff), 0, 1, 0, HEIGHT / 2);
+        p.fill(y, 100, 50);
+        p.rect(x, y, colWidth, HEIGHT - 2 * y);
+
+        xoff += 0.02;
+      }
+
+      this.yoff += 0.04;
+    },
+  },
+  {
+    name: "Growing Tree",
+    show: true,
+    loopLength: 600,
+
+    branch: function (p, len, theta, depth) {
+      if (depth >= 9) {
+        return;
+      }
+
+      // each branch is 1/2 the previous length
+      len *= 0.65;
+
+      let angles = [-theta, theta];
+      angles.forEach((a) => {
+        p.push();
+        p.rotate(a);
+        p.line(0, 0, 0, -len);
+        p.translate(0, -len);
+        this.branch(p, len, theta, depth + 1);
+        p.pop();
+      });
+    },
+
+    setup(p) {
+      p.stroke(0, 100, 100);
+      p.strokeWeight(2);
+    },
+
+    draw(p) {
+      p.background(0, 100, 0);
+
+      // let t = p.millis() * 0.0001;
+      let t = p.frameCount / this.loopLength;
+      let initial = 10 + 100 * pingpong(t);
+
+      let theta = (Math.PI / 180) * (60 * pingpongEased(t * 8));
+
+      p.translate(WIDTH / 2, HEIGHT);
+      p.line(0, 0, 0, -initial);
+      p.translate(0, -initial);
+      this.branch(p, initial, theta, 0);
+    },
+  },
+  {
     name: "Pulsing Squares",
     show: true,
 
@@ -53,6 +125,39 @@ const sketches = [
       let y = (Math.random() - 0.5) * r + centerY;
 
       p.rect(x, y, circleRadius, circleRadius);
+    },
+  },
+  {
+    name: "Noisy Numbers",
+    show: true,
+
+    yoff: 0.0,
+
+    setup(p) {
+      p.textSize(12);
+      p.textAlign(p.CENTER, p.CENTER);
+    },
+
+    draw(p) {
+      p.background(0);
+
+      let xoff = 0;
+      let colWidth = 10;
+
+      for (let x = 0; x <= WIDTH; x += colWidth) {
+        for (let y = 0; y <= HEIGHT; y += colWidth) {
+          let yhat = this.yoff + y / HEIGHT / 10;
+          let raw = p.noise(xoff, yhat);
+          let c = p.map(raw, 0, 1, 0, 100);
+          p.fill(c, 100, 50);
+          // rect(x, y, colWidth, colWidth);
+          p.text(p.char(p.unchar("1") + p.map(raw, 0.1, 0.9, 0, 10)), x, y);
+        }
+
+        xoff += 0.01;
+      }
+
+      this.yoff += 0.005;
     },
   },
   {
@@ -108,111 +213,6 @@ const sketches = [
       // need to add first vertex again so stroke is complete
       p.vertex(this.v[0].x, this.v[0].y);
       p.endShape();
-    },
-  },
-  {
-    name: "Growing Tree (perfect loop)",
-    show: true,
-    loopLength: 600,
-
-    branch: function (p, len, theta, depth) {
-      if (depth >= 9) {
-        return;
-      }
-
-      // each branch is 1/2 the previous length
-      len *= 0.65;
-
-      let angles = [-theta, theta];
-      angles.forEach((a) => {
-        p.push();
-        p.rotate(a);
-        p.line(0, 0, 0, -len);
-        p.translate(0, -len);
-        this.branch(p, len, theta, depth + 1);
-        p.pop();
-      });
-    },
-
-    setup(p) {
-      p.stroke(0, 100, 100);
-      p.strokeWeight(2);
-    },
-
-    draw(p) {
-      p.background(0, 100, 0);
-
-      // let t = p.millis() * 0.0001;
-      let t = p.frameCount / this.loopLength;
-      let initial = 10 + 100 * pingpong(t);
-
-      let theta = (Math.PI / 180) * (60 * pingpongEased(t * 8));
-
-      p.translate(WIDTH / 2, HEIGHT);
-      p.line(0, 0, 0, -initial);
-      p.translate(0, -initial);
-      this.branch(p, initial, theta, 0);
-    },
-  },
-  {
-    name: "Rainbow Wave",
-    show: true,
-
-    yoff: 0.0,
-
-    setup(p) {
-      p.background(0, 100, 100);
-      p.stroke(0, 100, 0);
-    },
-
-    draw(p) {
-      // p.background(0, 100, 100, 0.1);
-
-      let xoff = 0;
-      let colWidth = 4;
-
-      for (let x = 0; x <= WIDTH; x += colWidth) {
-        let y = p.map(p.noise(xoff, this.yoff), 0, 1, 0, HEIGHT / 2);
-        p.fill(y, 100, 50);
-        p.rect(x, y, colWidth, HEIGHT - 2 * y);
-
-        xoff += 0.02;
-      }
-
-      this.yoff += 0.04;
-    },
-  },
-  {
-    name: "Noisy Numbers",
-    show: true,
-
-    yoff: 0.0,
-
-    setup(p) {
-      p.textSize(12);
-      p.textAlign(p.CENTER, p.CENTER);
-    },
-
-    draw(p) {
-      p.background(0);
-
-      let xoff = 0;
-      let colWidth = 10;
-
-      for (let x = 0; x <= WIDTH; x += colWidth) {
-        for (let y = 0; y <= HEIGHT; y += colWidth) {
-          let yhat = this.yoff + y / HEIGHT / 10;
-          let raw = p.noise(xoff, yhat);
-          let c = p.map(raw, 0, 1, 0, 100);
-          p.fill(c, 100, 50);
-          // rect(x, y, colWidth, colWidth);
-          p.text(p.char(p.unchar("1") + p.map(raw, 0.1, 0.9, 0, 10)), x, y);
-        }
-
-        xoff += 0.01;
-      }
-
-      this.yoff += 0.005;
     },
   },
   {
