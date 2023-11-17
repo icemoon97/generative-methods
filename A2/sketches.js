@@ -1,5 +1,5 @@
-const WIDTH = 300;
-const HEIGHT = 300;
+const WIDTH = 350;
+const HEIGHT = 350;
 const DEFAULT_FRAME_RATE = 30;
 const DEFAULT_LOOP_LENGTH_IN_FRAMES = 100;
 

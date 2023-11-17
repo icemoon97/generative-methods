@@ -1,59 +1,54 @@
-body {
-    display: flex;
-    min-height: 100vh; /* Full viewport height */
-    flex-direction: column; /* Stack the children vertically */
-    margin: 0;
-    font-family: Arial, sans-serif;
-}
-
-header {
-    box-shadow: 0px 2px 3px rgba(0, 0, 0, .4);
-    z-index: 100;
-}
-
-#app {
-     z-index: 50;
-	 flex: 1; /* To allow the container to grow and consume the available space */
-    display: flex;
-    flex-direction: column;
-}
-
-main {
-    flex: 1; /* To allow main to grow and consume the available space */
-   
-}
-
 .sketch-holder {
-    background-color: grey;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300, 1fr));
-    gap: 16px;
-    padding: 16px;
-    grid-auto-rows: 1fr; /* Ensures rows adjust based on content size */
+  margin: 32px 0;
+  display: flex;
+  gap: 32px;
+  width: 100%;
+  max-width: 1000px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .sketch {
-	min-width: 50px;  /* minimum width for the sketches */
-    min-height: 50px; /* minimum height for the sketches */
-    width: max-content;
-
-    border-radius: 10px;
-    background-color: white;
-    text-align: center;
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, .5);
-
+  border: 1px solid #d17237;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
 }
 
-.sketch .title {
-	max-width: 300px;
+.canvas {
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 10px;
+  margin-bottom: 0px;
 }
 
-.sketch .description {
-	max-width: 300px;
+.sketch h4 {
+  margin: 5px;
 }
 
-.sketch canvas {
-	margin: 10px;
-    border: 3px solid black;
-	box-shadow: 0px 2px 8px rgba(0, 0, 0, .5);
+.sketch button {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  border: none;
+  background: #242424;
+  color: #ffffff;
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 8px;
+  opacity: 0.75;
+  cursor: pointer;
+  transition: opacity 150ms ease-in-out, scale 150ms ease-in-out;
+}
+
+.sketch button:hover {
+  opacity: 1;
+}
+
+.sketch button:active {
+  scale: 0.95;
 }

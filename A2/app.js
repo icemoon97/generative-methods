@@ -4,23 +4,16 @@ document.addEventListener("DOMContentLoaded", (event) => {
   new Vue({
     template: 
     `<div id="app">
+      <section class="sketch-holder">
+        <div v-for="(sketch, index) in activeSketches" class="sketch">
 
-      <main>
-        <section class="sketch-holder" :style="holderStyle">
-          <div v-for="(sketch, index) in activeSketches" class="sketch">
+          <div :ref="'canvas' + index" class="canvas" />
 
-            <h4>{{sketch.name}}</h4>
+          <h4>{{sketch.name}}</h4>
+          <button @click="saveSketch(sketch)">💾</button>
 
-            <div :ref="'canvas' + index" />
-
-            <p class="description">{{sketch.description}}</p>
-
-            <button @click="saveSketch(sketch)">💾</button>
-
-          </div>
-        </section>
-      </main>
-
+        </div>
+      </section>
     </div>`,
 
     methods: {
