@@ -131,33 +131,38 @@ const sketches = [
     name: "Noisy Numbers",
     show: true,
 
+    y: 0,
     yoff: 0.0,
 
     setup(p) {
-      p.textSize(12);
+      p.textSize(8);
       p.textAlign(p.CENTER, p.CENTER);
+
+      p.background(0);
     },
 
     draw(p) {
-      p.background(0);
-
       let xoff = 0;
-      let colWidth = 10;
+      let colWidth = 8;
 
       for (let x = 0; x <= WIDTH; x += colWidth) {
-        for (let y = 0; y <= HEIGHT; y += colWidth) {
-          let yhat = this.yoff + y / HEIGHT / 10;
-          let raw = p.noise(xoff, yhat);
-          let c = p.map(raw, 0, 1, 0, 100);
-          p.fill(c, 100, 50);
-          // rect(x, y, colWidth, colWidth);
-          p.text(p.char(p.unchar("1") + p.map(raw, 0.1, 0.9, 0, 10)), x, y);
-        }
+        p.fill(0, 0, 0);
+        p.rect(x, this.y, colWidth, colWidth);
 
-        xoff += 0.01;
+        let yhat = this.yoff + this.y / HEIGHT / 10;
+        let raw = p.noise(xoff, yhat);
+        let c = p.map(raw, 0, 1, 0, 100);
+        p.fill(c, 100, 50);
+        p.text(p.char(p.unchar("1") + p.map(raw, 0.1, 0.9, 0, 10)), x, this.y);
+
+        xoff += 0.02;
       }
 
-      this.yoff += 0.005;
+      this.y += colWidth;
+      if (this.y >= HEIGHT) {
+        this.y = 0
+      }
+      this.yoff += 0.01;
     },
   },
   {
