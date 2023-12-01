@@ -31,6 +31,10 @@ canvas {
   background-color: #646464;
 }
 
+.brushes button.selected {
+  background-color: #0034ad;
+}
+
 .settings .color-picker {
   width: 60px;
   height: 40px;

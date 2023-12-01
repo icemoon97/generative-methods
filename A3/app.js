@@ -11,15 +11,20 @@ document.addEventListener("DOMContentLoaded", (event) => {
     template: `
     <div id="app">
       <div class="canvas-holder">
-        
+
         <div ref="p5"></div>
-      
+
         <!-- a place to put tools -->
         <div class="tools">
           <div class="brushes">
-            <button v-for="brush in displayBrushes" @click="setTool(brush)" v-html="brush.label"></button>
+            <button v-for="brush in displayBrushes" 
+                    :key="brush.id" 
+                    @click="setTool(brush)"
+                    :class="{ selected: activeBrush === brush }" 
+                    v-html="brush.label">
+            </button>
           </div>
-          
+
           <div class="settings">
             <color-picker v-model="settings.color0" />
             <color-picker v-model="settings.color1" />
