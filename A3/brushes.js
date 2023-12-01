@@ -238,7 +238,7 @@ let brushes = [
 
   //======================================================
   {
-    label: "🕳",
+    label: "Clear Canvas",
     show: false,
     description: "Eraser",
 

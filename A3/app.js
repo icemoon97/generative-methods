@@ -16,7 +16,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
       
         <!-- a place to put tools -->
         <div class="tools">
-          <button v-for="brush in displayBrushes" @click="setTool(brush)" v-html="brush.label"></button>
+          <div class="brushes">
+            <button v-for="brush in displayBrushes" @click="setTool(brush)" v-html="brush.label"></button>
+          </div>
           
           <div class="settings">
             <color-picker v-model="settings.color0" />

@@ -1,5 +1,5 @@
 Vue.component("color-picker", {
-  template: `<input type="color" v-model="hexColor" @change="change" />`,
+  template: `<input class="color-picker" type="color" v-model="hexColor" @change="change" />`,
   methods: {
     change() {
       let hsl = hexToHSL(this.hexColor);
