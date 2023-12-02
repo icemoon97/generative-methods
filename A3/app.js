@@ -23,12 +23,15 @@ document.addEventListener("DOMContentLoaded", (event) => {
                     :class="{ selected: activeBrush === brush }" 
                     v-html="brush.label">
             </button>
+            <button @click="clearCanvas()">
+              Clear Canvas
+            </button>
           </div>
 
           <div class="settings">
             <color-picker v-model="settings.color0" />
             <color-picker v-model="settings.color1" />
-            <input type="range" v-model="settings.brushSize" max="10" step=".5" />
+            <input type="range" v-model="settings.brushSize" min="0" max="1" step=".01" />
           </div>
         </div>
       </div>
@@ -76,6 +79,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
         this.activeBrush = brush;
         this.activeBrush.setup?.(this.p);
       },
+
+      clearCanvas() {
+        this.activeBrush.clearCanvas?.(this.p);
+        this.p.background(0, 0, 0, 1);
+      }
     },
 
     data() {

@@ -3,9 +3,9 @@ const HEIGHT = 600;
 const DEFAULT_FRAME_RATE = 30;
 const DEFAULT_LOOP_LENGTH_IN_FRAMES = 100;
 
-const STARTING_COLOR0 = [160, 100, 50];
-const STARTING_COLOR1 = [320, 100, 50];
-const STARTING_BRUSH_SIZE = 1;
+const STARTING_COLOR0 = [0, 100, 50];
+const STARTING_COLOR1 = [0, 100, 100];
+const STARTING_BRUSH_SIZE = 0.5;
 
 let brushes = [
   // Your brushes here!
@@ -47,9 +47,11 @@ let brushes = [
     },
 
     draw(p, { color0, color1, brushSize }) {
+      let limit = brushSize * 30 + 5;
+
       p.noFill();
       p.beginShape();
-      this.points = this.points.filter((pt) => pt.r < 30);
+      this.points = this.points.filter((pt) => pt.r < limit);
       this.points.forEach((pt) => {
         p.stroke(0, 100, 100, 0.1);
         p.curveVertex(
@@ -60,11 +62,17 @@ let brushes = [
       });
       p.endShape();
     },
+
+    clearCanvas(p) {
+      this.points = [];
+    },
   },
   // Icicles
   {
     label: "Icicles",
     hide: false,
+
+    maxV: 15,
 
     setup(p, settings) {
       this.points = [];
@@ -82,7 +90,7 @@ let brushes = [
 
       let point = {
         pos: current.copy(),
-        v: p.createVector(p.random(-2, 2), p.random(5, 15)),
+        v: p.createVector(p.random(-2, 2), p.random(this.maxV / 2, this.maxV)),
       };
       this.points.push(point);
 
@@ -96,8 +104,8 @@ let brushes = [
     draw(p, { color0, color1, brushSize }) {
       this.points = this.points.filter((pt) => pt.v.mag() > 1);
       this.points.forEach((pt) => {
-        let inter = pt.v.mag() / 25;
-        let c = p.lerpColor(p.color(color0), p.color(color1), inter);
+        let inter = pt.v.mag() / this.maxV;
+        let c = p.lerpColor(p.color(color1), p.color(color0), inter);
         p.fill(c);
 
         p.circle(pt.pos.x, pt.pos.y, pt.v.mag());
@@ -105,6 +113,10 @@ let brushes = [
         pt.pos.add(pt.v);
         pt.v.mult(0.9);
       });
+    },
+
+    clearCanvas(p) {
+      this.points = [];
     },
   },
   // Flares
@@ -153,6 +165,10 @@ let brushes = [
         pt.v.mult(0.9);
       });
     },
+
+    clearCanvas(p) {
+      this.points = [];
+    },
   },
   // Falling
   {
@@ -194,18 +210,22 @@ let brushes = [
       this.objs = this.objs.filter((o) => o.v.mag() > 1);
       this.objs.forEach((o) => {
         let alpha = 1 - Math.sqrt(o.v.mag()) / 5;
-        p.stroke(0, 100, 50, alpha);
+        p.stroke(...color0, alpha);
         p.rect(o.pos.x, o.pos.y, o.size, o.size);
 
         o.pos.add(o.v);
         o.v.mult(0.9);
       });
     },
+
+    clearCanvas(p) {
+      this.objs = [];
+    }
   },
   // Basic
   {
     label: "Basic",
-    hide: false,
+    hide: true,
     description: "",
 
     setup(p, settings) {
@@ -239,7 +259,7 @@ let brushes = [
   //======================================================
   {
     label: "Clear Canvas",
-    show: false,
+    hide: true,
     description: "Eraser",
 
     setup(p, settings) {
