@@ -1,7 +1,3 @@
-/**
- * Starter code
- *
- */
 /* globals Vue, STARTING_COLOR0, STARTING_COLOR1, STARTING_BRUSH_SIZE, WIDTH, HEIGHT, p5 */
 
 document.addEventListener("DOMContentLoaded", (event) => {
